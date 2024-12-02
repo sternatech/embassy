@@ -304,5 +304,8 @@ foreach_flash_region! {
                 self.blocking_erase(from, to)
             }
         }
+
+        impl<MODE> embedded_storage::nor_flash::MultiwriteNorFlash for crate::_generated::flash_regions::$type_name<'_, MODE> {}
+
     };
 }
