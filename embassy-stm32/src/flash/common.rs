@@ -305,7 +305,7 @@ foreach_flash_region! {
             }
         }
 
-        impl embedded_storage::nor_flash::MultiwriteNorFlash for crate::_generated::flash_regions::$type_name<'_, MODE> {}
+        impl embedded_storage::nor_flash::MultiwriteNorFlash for crate::_generated::flash_regions::$type_name<'_, Blocking> {}
 
     };
 }
