@@ -106,7 +106,7 @@ mod thread {
             loop {
                 unsafe {
                     self.inner.poll();
-                    //asm!("wfe");
+                    asm!("wfe");
                 };
             }
         }
