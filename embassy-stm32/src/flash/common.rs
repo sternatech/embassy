@@ -170,6 +170,7 @@ pub(super) unsafe fn blocking_erase(
         trace!("Erased sector: {:?}", sector);
         address += sector.size;
     }
+    trace!("Erased from 0x{:x} to 0x{:x}. Returning", start_address, end_address);
     Ok(())
 }
 
