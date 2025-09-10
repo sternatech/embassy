@@ -68,6 +68,7 @@ impl<'d, MODE> Flash<'d, MODE> {
     /// NOTE: `from` and `to` are offsets from the flash start, NOT an absolute address.
     /// For example, to erase address `0x0801_0000` you have to use offset `0x1_0000`.
     pub fn blocking_erase(&mut self, from: u32, to: u32) -> Result<(), Error> {
+        trace!("blocking_erase from 0x{:x} to 0x{:x}", from, to);
         unsafe { blocking_erase(FLASH_BASE as u32, from, to, erase_sector_unlocked) }
     }
 }
