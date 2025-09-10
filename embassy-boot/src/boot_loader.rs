@@ -352,14 +352,16 @@ impl<ACTIVE: NorFlash, DFU: NorFlash, STATE: NorFlash> BootLoader<ACTIVE, DFU, S
             let page_size = Self::PAGE_SIZE as u32;
             trace!("Erasing dfu 0x{:x}-0x{:x}", to_offset, to_offset + page_size);
             self.dfu.erase(to_offset as u32, to_offset + page_size)?;
-
+            trace!("Copying page 0x{:x}-0x{:x}", from_offset, from_offset + page_size);
             for offset_in_page in (0..page_size).step_by(aligned_buf.len()) {
                 self.active.read(from_offset + offset_in_page as u32, aligned_buf)?;
                 self.dfu.write(to_offset + offset_in_page as u32, aligned_buf)?;
             }
-
+            trace!("updating progress");
             self.update_progress(progress_index, aligned_buf)?;
+            trace!("progress updated");
         }
+        trace!("Copy page to dfu done");
         Ok(())
     }
 
