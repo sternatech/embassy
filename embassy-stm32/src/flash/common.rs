@@ -141,12 +141,12 @@ pub(super) unsafe fn blocking_erase(
 ) -> Result<(), Error> {
     trace!("Before offsetting from 0x{:x} to 0x{:x}", from, to);
     let from = if from >= base { from - base } else { from };
-    let to   = if to   >= base { to   - base } else { to   };
+    let to = if to >= base { to - base } else { to };
     trace!("After offsetting from 0x{:x} to 0x{:x}", from, to);
     let start_address = base + from;
     let end_address = base + to;
     let regions = get_flash_regions();
-    
+
     for r in regions {
         trace!(
             "Flash region: bank={:?} base=0x{:08x} size=0x{:x} erase_size=0x{:x} write_size={}",
@@ -167,6 +167,7 @@ pub(super) unsafe fn blocking_erase(
         trace!("Sector start 0x{:x}", sector.start);
         trace!("Erasing sector: {:?}", sector);
         erase_sector(&sector)?;
+        trace!("Erased sector: {:?}", sector);
         address += sector.size;
     }
     Ok(())
