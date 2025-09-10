@@ -159,6 +159,7 @@ pub(super) unsafe fn blocking_erase(
     let mut address = start_address;
     while address < end_address {
         let sector = get_sector(address, regions);
+        trace!("Sector start 0x{:x}", sector.start);
         trace!("Erasing sector: {:?}", sector);
         erase_sector(&sector)?;
         address += sector.size;
