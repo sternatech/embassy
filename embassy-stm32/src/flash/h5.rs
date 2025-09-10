@@ -83,6 +83,8 @@ pub(crate) unsafe fn blocking_write(start_address: u32, buf: &[u8; WRITE_SIZE]) 
 }
 
 pub(crate) unsafe fn blocking_erase_sector(sector: &FlashSector) -> Result<(), Error> {
+    #[cfg(feature = "defmt")]
+    defmt::trace!("inside blocking_erase_sector");
     // pac::FLASH.wrp2r_cur().read().wrpsg()
     // TODO: write protection check
     if pac::FLASH.nscr().read().lock() == true {
