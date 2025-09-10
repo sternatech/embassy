@@ -118,6 +118,9 @@ pub(crate) unsafe fn blocking_erase_sector(sector: &FlashSector) -> Result<(), E
     cortex_m::asm::dsb();
     fence(Ordering::SeqCst);
 
+    #[cfg(feature = "defmt")]
+    defmt::trace!("blocking_wait_ready");
+    
     let ret: Result<(), Error> = blocking_wait_ready().map_err(|e| {
         error!("erase err");
         e
@@ -125,6 +128,9 @@ pub(crate) unsafe fn blocking_erase_sector(sector: &FlashSector) -> Result<(), E
 
     pac::FLASH.nscr().modify(|w| w.set_ser(false));
     clear_all_err();
+    #[cfg(feature = "defmt")]
+    defmt::trace!("ret {}",ret);
+    
     ret
 }
 
