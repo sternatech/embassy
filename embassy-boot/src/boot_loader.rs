@@ -371,13 +371,13 @@ impl<ACTIVE: NorFlash, DFU: NorFlash, STATE: NorFlash> BootLoader<ACTIVE, DFU, S
             // Copy active page to the 'next' DFU page.
             let active_from_offset = (page_count - 1 - page_num) * Self::PAGE_SIZE;
             let dfu_to_offset = (page_count - page_num) * Self::PAGE_SIZE;
-            trace!("Copy active {} to dfu {}", active_from_offset, dfu_to_offset);
+            trace!("Copy active 0x{:x} to dfu 0x{:x}", active_from_offset, dfu_to_offset);
             self.copy_page_once_to_dfu(progress_index, active_from_offset, dfu_to_offset, aligned_buf)?;
 
             // Copy DFU page to the active page
             let active_to_offset = (page_count - 1 - page_num) * Self::PAGE_SIZE;
             let dfu_from_offset = (page_count - 1 - page_num) * Self::PAGE_SIZE;
-            trace!("Copy dfy {} to active {}", dfu_from_offset, active_to_offset);
+            trace!("Copy dfy 0x{:x} to active 0x{:x}", dfu_from_offset, active_to_offset);
             self.copy_page_once_to_active(progress_index + 1, dfu_from_offset, active_to_offset, aligned_buf)?;
         }
 
