@@ -142,6 +142,16 @@ pub(super) unsafe fn blocking_erase(
     let end_address = base + to;
     let regions = get_flash_regions();
 
+    for r in regions {
+        trace!(
+            "Flash region: bank={:?} base=0x{:08x} size=0x{:x} erase_size=0x{:x} write_size={}",
+            r.bank,
+            r.base,
+            r.size,
+            r.erase_size,
+            r.write_size
+        );
+    }
     ensure_sector_aligned(start_address, end_address, regions)?;
 
     trace!("Erasing from 0x{:x} to 0x{:x}", start_address, end_address);
