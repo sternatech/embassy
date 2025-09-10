@@ -142,7 +142,8 @@ pub(super) unsafe fn blocking_erase(
     let start_address = base + from;
     let end_address = base + to;
     let regions = get_flash_regions();
-
+    let from = if from >= base { from - base } else { from };
+    let to   = if to   >= base { to   - base } else { to   };
     for r in regions {
         trace!(
             "Flash region: bank={:?} base=0x{:08x} size=0x{:x} erase_size=0x{:x} write_size={}",
