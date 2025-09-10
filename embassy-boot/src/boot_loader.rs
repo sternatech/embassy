@@ -350,7 +350,7 @@ impl<ACTIVE: NorFlash, DFU: NorFlash, STATE: NorFlash> BootLoader<ACTIVE, DFU, S
     ) -> Result<(), BootError> {
         if self.current_progress(aligned_buf)? <= progress_index {
             let page_size = Self::PAGE_SIZE as u32;
-
+            trace!("Erasing dfu 0x{:x}-0x{:x}", to_offset, to_offset + page_size);
             self.dfu.erase(to_offset as u32, to_offset + page_size)?;
 
             for offset_in_page in (0..page_size).step_by(aligned_buf.len()) {
