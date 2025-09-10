@@ -358,6 +358,7 @@ impl<ACTIVE: NorFlash, DFU: NorFlash, STATE: NorFlash> BootLoader<ACTIVE, DFU, S
                 self.active.read(from_offset + offset_in_page as u32, aligned_buf)?;
                 trace!("Writing dfu 0x{:x}", to_offset + offset_in_page as u32);
                 self.dfu.write(to_offset + offset_in_page as u32, aligned_buf)?;
+                trace!("Wrote dfu 0x{:x}", to_offset + offset_in_page as u32);
             }
             trace!("updating progress");
             self.update_progress(progress_index, aligned_buf)?;
