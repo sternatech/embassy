@@ -139,8 +139,10 @@ pub(super) unsafe fn blocking_erase(
     to: u32,
     erase_sector: unsafe fn(&FlashSector) -> Result<(), Error>,
 ) -> Result<(), Error> {
+    trace!("Before offsetting from 0x{:x} to 0x{:x}", from, to);
     let from = if from >= base { from - base } else { from };
     let to   = if to   >= base { to   - base } else { to   };
+    trace!("After offsetting from 0x{:x} to 0x{:x}", from, to);
     let start_address = base + from;
     let end_address = base + to;
     let regions = get_flash_regions();
